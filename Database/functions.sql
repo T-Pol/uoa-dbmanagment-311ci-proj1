@@ -246,3 +246,125 @@ begin
   end loop;
 END; $$
 LANGUAGE plpgsql;
+
+
+--stored function 9--
+--Find the rodent baiting requests where the number of premises baited is less than a specified number.
+
+CREATE OR REPLACE FUNCTION stored_function_9(in in_num int8)
+returns table(out_reqnumber varchar, oun_numberbaited int8)
+AS $$
+declare
+  request record;
+begin
+  for request in (					
+					select distinct data.service_request_number as reqnumber, rb.number_of_premises_baited as prembait
+					from data, rodent_baiting as rb
+					where data.id=rb.data_id
+					and rb.number_of_premises_baited< in_num
+					order by rb.number_of_premises_baited desc
+				)	
+  loop
+    out_reqnumber := request.reqnumber;
+    oun_numberbaited := request.prembait;
+    return next;
+  end loop;
+END; $$
+LANGUAGE plpgsql;
+
+
+--stored function 10--
+--Same as the above (i.e., 9) for premises with garbage.
+
+CREATE OR REPLACE FUNCTION stored_function_10(in in_num int8)
+returns table(out_reqnumber varchar, oun_numbergarb int8)
+AS $$
+declare
+  request record;
+begin
+  for request in (					
+					select distinct data.service_request_number as reqnumber, rb.number_of_permises_garbage as permisegarb
+					from data, rodent_baiting as rb
+					where data.id=rb.data_id
+					and rb.number_of_permises_garbage < in_num
+					order by rb.number_of_permises_garbage desc
+				)	
+  loop
+    out_reqnumber := request.reqnumber;
+    oun_numbergarb := request.permisegarb;
+    return next;
+  end loop;
+END; $$
+LANGUAGE plpgsql;
+
+
+--stored function 11--
+--Same as the above (i.e., 10) for premises with rats.
+
+CREATE OR REPLACE FUNCTION stored_function_11(in in_num int8)
+returns table(out_reqnumber varchar, oun_numberrats int8)
+AS $$
+declare
+  request record;
+begin
+  for request in (					
+					select distinct data.service_request_number as reqnumber, rb.number_of_permises_rats as permiserats
+					from data, rodent_baiting as rb
+					where data.id=rb.data_id
+					and rb.number_of_permises_rats < in_num
+					order by rb.number_of_permises_rats desc
+				)	
+  loop
+    out_reqnumber := request.reqnumber;
+    oun_numberrats := request.permiserats;
+    return next;
+  end loop;
+END; $$
+LANGUAGE plpgsql;
+
+
+--stored function 12--
+--Find the police districts that have handled “pot holes” requests with more than one number of potholes on the same day that they also handled “rodent baiting” requests with more than one number of premises baited, for a specific day.
+
+CREATE OR REPLACE FUNCTION stored_function_12
+(in_timestamp timestamp without time zone)
+returns table(out_police_district int8)
+AS $$
+declare
+  request record;
+begin
+  for request in(
+					select distinct police_district
+					from data
+					where data.id in 
+					(
+						select data_id
+						from rodent_baiting
+						where data_id in
+						(
+							select id
+							from data 
+							where completition_date =in_timestamp
+							and typeofservicerequest_idtype_of_service_request = 'Rodent Baiting/Rat Complaint'
+						)
+
+					union all
+					select pot.data_id
+					from pot_holes_reported as pot
+					where pot.number_pots_filled_block > 1
+					and pot.data_id in
+					(
+					select id
+					from data
+					where completition_date =in_timestamp
+					and typeofservicerequest_idtype_of_service_request =  'Pot Hole in Street'
+					)
+					)
+					  				
+				)
+  loop
+    out_police_district := request.police_district;
+    return next;
+  end loop;
+END; $$
+LANGUAGE plpgsql;
