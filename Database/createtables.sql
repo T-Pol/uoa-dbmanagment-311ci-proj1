@@ -174,3 +174,13 @@ CREATE TABLE users
   role integer,
   PRIMARY KEY (id)
 )
+
+CREATE TABLE useractions
+(
+  action_id serial NOT NULL,
+  user_id integer NOT NULL,
+  action character varying(255),
+  action_details character varying(255),
+  CONSTRAINT useractions_pkey PRIMARY KEY (action_id),
+  FOREIGN KEY (user_id) REFERENCES user (id) 
+)
