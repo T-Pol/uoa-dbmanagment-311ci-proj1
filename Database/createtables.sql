@@ -46,3 +46,119 @@ CREATE TABLE public.data
   FOREIGN KEY (stat_status_id) REFERENCES status (status_id),
   FOREIGN KEY (typeofservicerequest_idtype_of_service_request)REFERENCES type_of_service_request (idtype_of_service_request)
 )
+
+
+-- -----------------------------------------------------
+-- Table abandoned_vehicles
+-- -----------------------------------------------------
+
+CREATE TABLE abandoned_vehicles
+(
+  data_id uuid NOT NULL,
+  license_plate text,
+  vehicle_make text,
+  vehicle_color character varying(30),
+  current_activity text,
+  most_recent_action text,
+  days_reported numeric,
+  PRIMARY KEY (data_id),
+  FOREIGN KEY (data_id) REFERENCES data (id) 
+)
+
+
+-- -----------------------------------------------------
+-- Table garbage_carts
+-- -----------------------------------------------------
+CREATE TABLE garbage_carts
+(
+  data_id uuid NOT NULL,
+  number_of_carts numeric,
+  current_activity text,
+  most_recent_action text,
+  PRIMARY KEY (data_id),
+  FOREIGN KEY (data_id) REFERENCES data (id)
+)
+
+
+-- -----------------------------------------------------
+-- Table graffiti_removal
+-- -----------------------------------------------------
+CREATE TABLE graffiti_removal
+(
+  data_id uuid NOT NULL,
+  type_of_surface character varying(45),
+  graffiti_located character varying(45),
+  PRIMARY KEY (data_id),
+  FOREIGN KEY (data_id) REFERENCES data (id)
+)
+
+-- -----------------------------------------------------
+-- Table pot_holes_reported
+-- -----------------------------------------------------
+
+CREATE TABLE pot_holes_reported
+(
+  data_id uuid NOT NULL,
+  number_pots_filled_block integer,
+  current_activity text,
+  most_recent_action text,
+  PRIMARY KEY (data_id),
+  FOREIGN KEY (data_id) REFERENCES data (id)
+)
+
+-- -----------------------------------------------------
+-- Table rodent_baiting
+-- -----------------------------------------------------
+
+CREATE TABLE rodent_baiting
+(
+  data_id uuid NOT NULL,
+  number_of_premises_baited integer,
+  number_of_permises_garbage integer,
+  number_of_permises_rats integer,
+  current_activity text,
+  most_recent_action text,
+  PRIMARY KEY (data_id),
+  FOREIGN KEY (data_id) REFERENCES data (id)
+)
+
+-- -----------------------------------------------------
+-- Table sanitation_code_complaints
+-- -----------------------------------------------------
+
+CREATE TABLE sanitation_code_complaints
+(
+  data_id uuid NOT NULL,
+  nature_of_code_violation text,
+  PRIMARY KEY (data_id),
+  FOREIGN KEY (data_id) REFERENCES data (id) 
+)
+
+-- -----------------------------------------------------
+-- Table tree_derbis
+-- -----------------------------------------------------
+
+CREATE TABLE tree_derbis
+(
+  data_id uuid NOT NULL,
+  derbis_located text,
+  current_activity text,
+  most_recent_action text,
+  PRIMARY KEY (data_id),
+  FOREIGN KEY (data_id) REFERENCES data (id)
+)
+
+-- -----------------------------------------------------
+-- Table tree_trims
+-- -----------------------------------------------------
+
+CREATE TABLE tree_trims
+(
+  data_id uuid NOT NULL,
+  location_of_trees text,
+  PRIMARY KEY (data_id),
+  FOREIGN KEY (data_id) REFERENCES data (id) 
+)
+
+
+
