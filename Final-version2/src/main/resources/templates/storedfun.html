@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Home</title>
+    <meta name="description" content="spring-boot thymeleaf | home ">
+    <div th:replace="fragments/header :: header-css"></div>
+</head>
+<body onload="myFunction()">
+
+<div th:replace="fragments/header :: header"></div>
+
+<div class="tab-content">
+
+    <div class="tab-pane active" id="addTaskTab">
+        <div class="container">
+            <div class="content-container clearfix">
+                <label>Total requests per type within specified time range.</label>
+                <form th:action="@{/task/storedRes1}" method="get" class="form-inline">
+					  <div class="form-group">                           
+                             <label for="startdate1">Start Date  </label>
+                                <div class="col-md-4  input-group date">
+                               
+                                    <input  class="form-control" th:name="startdate1"
+                                           required="required"
+                                           placeholder="Request date" id="startdate1" type="date" />
+                                </div>
+                            <label for="enddate1">End Date  </label>
+                                <div class="col-md-4  input-group date">    
+                                    <input  class="form-control" th:name="enddate1"
+                                           required="required"
+                                           placeholder="Request date" id="enddate1" type="date"/>
+                                </div>
+                            </div>
+					  
+					  <button type="submit" class="btn btn-primary mb-2">Search</button>										 
+					</form>	
+					<hr style="height: 10px;border: 0;box-shadow: 0 10px 10px -10px #8c8b8b inset;">
+					<span class="help-block"></span>
+				<label>Total requests per day for a specific request type and time range.</label>
+                <form th:action="@{/task/storedRes2}"  method="get" class="form-inline">
+					  <div class="form-group">
+                            
+                            	<select id='dropdown' th:name="typeofrequest">
+								  <option th:value="'Abandoned Vehicle Complaint'" th:text="'Abandoned Vehicle Complaint'"></option>
+								  <option th:value="'Alley Light Out'" th:text="'Alley LightOut'"></option>
+								  <option th:value="'Garbage Cart Black Maintenance/Replacement'"th:text="'Garbage Cart Black Maintenance/Replacement'"></option>
+								  <option th:value="'Graffiti Removal'" th:text="'Graffiti Removal'"></option>
+								  <option th:value="'Pot Hole in Street'" th:text="'Pot Hole in Street'"></option>
+								  <option th:value="'Rodent Baiting/Rat Complaint'" th:text="'Rodent Baiting/Rat Complaint'"></option>
+								  <option th:value="'Sanitation Code Violation'" th:text="'Sanitation Code Violation'"></option>
+								  <option th:value="'Street Lights - All/Out'" th:text="'Street Lights - All/Out'"></option>
+								  <option th:value="'Street Light - 1/Out'" th:text="'Street Light - 1/Out'"></option>
+								  <option th:value="'Tree Debris'" th:text="'Tree Debris'"></option>
+								  <option th:value="'Tree Trim'" th:text="'Tree Trim'"></option>								  
+								</select>
+                            </div>
+				  
+					  <div class="form-group">                           
+                             <label for="startdate1">Start Date  </label>
+                                <div class="col-md-4  input-group date">
+                               
+                                    <input  class="form-control" th:name="startdate1"
+                                           required="required"
+                                           placeholder="Request date" id="startdate1" type="date" />
+                                </div>
+                            <label for="enddate1">End Date  </label>
+                                <div class="col-md-4  input-group date">
+                               
+                                    <input  class="form-control" th:name="enddate1"
+                                           required="required"
+                                           placeholder="Request date" id="enddate1" type="date"/>
+                                </div>
+                            </div>
+					  
+					  <button type="submit" class="btn btn-primary mb-2" id="btn2">Search</button>
+										 
+					</form>	
+					<hr style="height: 10px;border: 0;box-shadow: 0 10px 10px -10px #8c8b8b inset;">
+					<span class="help-block"></span>
+					<label>Most common service request per zipcode for a specific day.</label>
+                	<form th:action="@{/task/storedRes3}" method="get" class="form-inline">
+					  <div class="form-group">                           
+                             <label for="startdate1">Choose a day.  </label>
+                                <div class="col-md-4  input-group date">
+                               
+                                    <input  class="form-control" th:name="startdate1"
+                                           required="required"
+                                           placeholder="Request date" id="startdate1" type="date" />
+                                </div>
+                           					  
+					  <button type="submit" class="btn btn-primary mb-2">Search</button>
+							</div>			 
+					</form>	
+					<hr style="height: 10px;border: 0;box-shadow: 0 10px 10px -10px #8c8b8b inset;">
+                    <span class="help-block"></span>
+                    <label>Average completion time per service request for a specific date range.</label>
+              		  <form th:action="@{/task/storedRes4}" method="get" class="form-inline">
+					  <div class="form-group">                           
+                             <label for="startdate1">Start Date  </label>
+                                <div class="col-md-4  input-group date">
+                               
+                                    <input  class="form-control" th:name="startdate1"
+                                           required="required"
+                                           placeholder="Request date" id="startdate1" type="date" />
+                                </div>
+                            <label for="enddate1">End Date  </label>
+                                <div class="col-md-4  input-group date">    
+                                    <input  class="form-control" th:name="enddate1"
+                                           required="required"
+                                           placeholder="Request date" id="enddate1" type="date"/>
+                                </div>
+                            </div>
+					  
+					  <button type="submit" class="btn btn-primary mb-2">Search</button>										 
+					</form>	
+      				<hr style="height: 10px;border: 0;box-shadow: 0 10px 10px -10px #8c8b8b inset;">
+                    <span class="help-block"></span>
+                    <label>The top-5 Special Service Areas (SSA) with regards to total number of requests per day for a specific date range.</label>
+              		  <form th:action="@{/task/storedRes6}" method="get" class="form-inline">
+					  <div class="form-group">                           
+                             <label for="startdate1">Start Date  </label>
+                                <div class="col-md-4  input-group date">
+                               
+                                    <input  class="form-control" th:name="startdate1"
+                                           required="required"
+                                           placeholder="Request date" id="startdate1" type="date" />
+                                </div>
+                            <label for="enddate1">End Date  </label>
+                                <div class="col-md-4  input-group date">    
+                                    <input  class="form-control" th:name="enddate1"
+                                           required="required"
+                                           placeholder="Request date" id="enddate1" type="date"/>
+                                </div>
+                            </div>
+					  <button type="submit" class="btn btn-primary mb-2">Search</button>										 
+					</form>	
+					<hr style="height: 10px;border: 0;box-shadow: 0 10px 10px -10px #8c8b8b inset;">
+                    <span class="help-block"></span>
+                    <label>Find the police districts that have handled pot-holes requests with more than one number of potholes on the same day that they also handled rodent-baiting requests with more than one number of premises baited, for a specific day.</label>
+              		  <form th:action="@{/task/storedRes12}" method="get" class="form-inline">
+					<div class="form-group">                           
+                             <label for="startdate1">Date  </label>
+                                <div class="col-md-4  input-group date">
+                               
+                                    <input  class="form-control" th:name="startdate1"
+                                           required="required"
+                                           placeholder="Request date" id="startdate1" type="date" />
+                                </div>
+                                </div>
+					  <button type="submit" class="btn btn-primary mb-2">Search</button>										 
+					</form>	
+										<hr style="height: 10px;border: 0;box-shadow: 0 10px 10px -10px #8c8b8b inset;">
+					
+                    
+                <span class="help-block"></span>
+                <br/><br/>
+                <div id="scrollonload"></div>
+                <div th:if="${stn=='stored1'}">
+                	<h4>Search: Total requests per type within specified time range.</h4>
+                	<h4 th:text="'Start Date: '+${startdate}"></h4>
+                	<h4 th:text="'End Date: '+${enddate}"></h4>
+                </div>
+                <div th:if="${stn=='stored2'}">
+                	<h4>Search: Total requests per day for a specific request type and time range.</h4>
+                	<h4 th:text="'Request Type: '+${typeofrequest}"></h4>
+                	<h4 th:text="'Start Date: '+${startdate}"></h4>
+                	<h4 th:text="'End Date: '+${enddate}"></h4>
+                </div>
+                <div th:if="${stn=='stored3'}">
+                	<h4>Search: Most common service request per zipcode for a specific day.</h4>
+                	<h4 th:text="'Date: '+${date3}"></h4>
+                </div>
+                <div th:if="${stn=='stored4'}">
+                	<h4>Search: Average completion time per service request for a specific date range.</h4>
+                	<h4 th:text="'Start Date: '+${startdate}"></h4>
+                	<h4 th:text="'End Date: '+${enddate}"></h4>
+                </div>
+                <div th:if="${stn=='stored6'}">
+                	<h4>Search: The top-5 Special Service Areas (SSA) with regards to total number of requests per day for a specific date range.</h4>
+                	<h4 th:text="'Start Date: '+${startdate}"></h4>
+                	<h4 th:text="'End Date: '+${enddate}"></h4>
+                </div>
+                <div th:if="${stn=='stored12'}">
+                	<h4>Search: Find the police districts that have handled pot-holes requests with more than one number of potholes on the same day that they also handled rodent-baiting requests with more than one number of premises baited, for a specific day.</h4>
+                	<h4 th:text="'Date: '+${date3}"></h4>
+                </div>
+                <div class="row">
+                    <div class="panel panel-info">
+                        <div class="panel-body">
+                            <table class="table table-bordered  table-striped table-responsive">
+                                <thead>
+                                <tr th:if="${stn=='stored1'}" class="btn-info">
+                                    <th>Type of request</th>
+                                    <th>Total requests</th>
+                                </tr>
+                                <tr th:if="${stn=='stored2'}" class="btn-info">
+                                    <th>Date</th>
+                                    <th>Total requests</th>
+                                </tr>
+                                <tr th:if="${stn=='stored3'}" class="btn-info">
+                                    <th>Zip code</th>
+                                    <th>Most common request</th>
+                                    <th>Total requests</th>
+                                </tr>
+                                <tr th:if="${stn=='stored4'}" class="btn-info">
+                                    <th>Type of request</th>
+                                    <th>Average Time in seconds</th>
+                                </tr>
+                                <tr th:if="${stn=='stored6'}" class="btn-info">
+                                    <th>SSA</th>
+                                    <th>Requests per day</th>
+                                </tr>
+                                <tr th:if="${stn=='stored12'}" class="btn-info">
+                                    <th>Police Districts</th>
+                                </tr>
+                                <tr th:if="${stn=='entry'}" class="btn-info">
+                                    <th>No result yet...</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:if="${#lists.isEmpty(obj)}" class="btn-default">
+                                    <td colspan="5" align="center">No search made yet!</td>
+                                </tr>
+                                <tr th:if="${stn=='stored2'}" th:each="t : ${obj}">
+                                    <td th:text="${t.get(0)}"></td>
+                                    <td th:text="${t.get(1)}"></td>
+                                </tr>
+                                <tr th:if="${stn=='stored1'}" th:each="t : ${obj}">
+                                    <td th:text="${t.get(0)}"></td>
+                                    <td th:text="${t.get(1)}"></td>
+                                </tr>
+                                <tr th:if="${stn=='stored3'}" th:each="t : ${obj}">
+                                    <td th:text="${t.get(0)}"></td>
+                                    <td th:text="${t.get(1)}"></td>
+                                    <td th:text="${t.get(2)}"></td>
+                                </tr>
+                                <tr th:if="${stn=='stored4'}" th:each="t : ${obj}">
+                                    <td th:text="${t.get(0)}"></td>
+                                    <td th:text="${t.get(1)}"></td>
+                                </tr>
+                                <tr th:if="${stn=='stored6'}" th:each="t : ${obj}">
+                                    <td th:text="${t.get(0)}"></td>
+                                    <td th:text="${t.get(1)}"></td>
+                                </tr>
+                                <tr th:if="${stn=='stored12'}" th:each="t : ${obj}">
+                                    <td th:text="${t}"></td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    </div>
+                         
+<script>
+function myFunction() {
+    document.getElementById( 'scrollonload' ).scrollIntoView();    
+
+}
+</script>
+</body>
+</html>

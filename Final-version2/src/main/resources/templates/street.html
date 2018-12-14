@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+   <title>View</title>
+   <meta name="description" content="spring-boot thymeleaf | view ">
+   <div th:replace="fragments/header :: header-css"></div>
+</head>
+
+<div th:replace="fragments/header :: header"></div>
+
+<div class="tab-content">
+
+    <div class="tab-pane active" id="addTaskTab">
+        <div class="container">
+            <div class="content-container clearfix">
+                <div class="row">
+                    <h1 class="content-title">Search by street:</h1>
+                    <h1 class="content-title" th:text="${streetnameres}"></h1>
+                    
+                                  
+					<form th:action="@{/task/streetSearch}" method="get" class="form-inline">
+					  
+					  <div class="form-group mx-sm-3 mb-2">
+					    <input  id="streetname" th:name="streetname" class="form-control" placeholder="Search street..." required="required">
+					  </div>
+					  <button type="submit" class="btn btn-primary mb-2">Search</button>
+										 
+					</form>
+					
+                    <div class="row">
+				        <div class="form-group col-md-1">
+				            <select class="form-control pagination" id="pageSizeSelect">
+				                <option th:each="pageSize : ${pageSizes}" th:text="${pageSize}" th:value="${pageSize}"
+				                        th:selected="${pageSize} == ${selectedPageSize}"></option>
+				            </select>
+				        </div>
+				        <div th:if="${alldata.totalPages != 1}" class="form-group col-md-11 pagination-centered">
+				            <ul class="pagination">
+				                <li th:class="${alldata.number == 0} ? disabled">
+				                    <a class="pageLink" th:href="@{/task/streetSearch(streetname=${streetnameres},streetnamepageSize=${selectedPageSize}, page=1)}">&laquo;</a>
+				                </li>
+				                <li th:class="${alldata.number == 0} ? disabled">
+				                    <a class="pageLink" th:href="@{/task/streetSearch(streetname=${streetnameres},pageSize=${selectedPageSize}, page=${alldata.number})}">&larr;</a>
+				                </li>
+				                <li th:class="${alldata.number == (page - 1)} ? 'active pointer-disabled'"
+				                    th:each="page : ${#numbers.sequence(pager.startPage, pager.endPage)}">
+				                    <a class="pageLink" th:href="@{/task/streetSearch(streetname=${streetnameres},pageSize=${selectedPageSize}, page=${page})}"
+				                       th:text="${page}"></a>
+				                </li>
+				                <li th:class="${alldata.number + 1 == alldata.totalPages} ? disabled">
+				                    <a class="pageLink"
+				                       th:href="@{/task/streetSearch(streetname=${streetnameres},pageSize=${selectedPageSize}, page=${alldata.number + 2})}">&rarr;</a>
+				                </li>
+				                <li th:class="${alldata.number + 1 == alldata.totalPages} ? disabled">
+				                    <a class="pageLink"
+				                       th:href="@{/task/streetSearch(streetname=${streetnameres},pageSize=${selectedPageSize}, page=${alldata.totalPages})}">&raquo;</a>
+				                </li>
+				            </ul>
+				        </div>
+				    </div>
+                <span class="help-block"></span>
+                
+                <div class="row">
+                    <div class="panel panel-info" >
+                        <div class="panel-body" style="overflow:scroll">
+                        
+                            <table class="table table-bordered  table-striped table-responsive table-hover " >
+                                <thead >
+                                <tr class="btn-info header">
+                                    <th></th>
+                                    <th>ID</th>
+                                    <th>Creation Date</th>
+                                    <th>Status ID</th>
+                                    <th>Completition Date</th>
+                                    <th>Service Request Number</th>
+                                    <th>Type of Serice Request</th>
+                                    <th>Street Address</th>
+                                    <th>Zip code</th>
+                                    <th>X coordinate</th>
+                                    <th>Y coordinate</th>
+                                    <th>Ward</th>
+                                    <th>Police District</th>
+                                    <th>Community Area</th>
+                                    <th>Latitude</th>
+                                    <th>Longtitude</th>
+                                    <th>Location</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:if="${#lists.isEmpty(alldata)}" class="btn-default">
+                                    <td colspan="5" align="center">No Task Entered Yet!!!</td>
+                                </tr>
+                                <tr th:each="data : ${alldata}">
+                                    <td align="center">
+                                        <a th:href="@{/task/editentry/{id}(id=${data.id})}">
+                                            <span class="glyphicon glyphicon-edit" title="Edit Request"></span></a>
+                                        
+                                    </td>
+                                    <td th:text="${data.id}"></td>
+                                    <td th:text="${data.creationDate}"></td>
+                                    <td th:text="${data.status.statusid}"></td>
+                                    <td th:text="${data.completitionDate}"></td>
+                                    <td th:text="${data.serviceRequestNumber}"></td>
+                                    <td th:text="${data.typeofservicerequest.typeofservicerequestid}"></td>
+                                    <td th:text="${data.streetAddress}"></td>
+                                    <td th:text="${data.zipCode}"></td>
+                                    <td th:text="${data.xCoor}"></td>
+                                    <td th:text="${data.yCoor}"></td>
+                                    <td th:text="${data.ward}"></td>
+                                    <td th:text="${data.policeDistrict}"></td>
+                                    <td th:text="${data.communityArea}"></td>
+                                    <td th:text="${data.lat}"></td>
+                                    <td th:text="${data.lon}"></td>
+                                    <td th:text="${data.location}"></td>
+                                    
+                                   
+                                </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+  
+</div>
+</body>
+</html>

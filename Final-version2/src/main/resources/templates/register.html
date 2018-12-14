@@ -1,0 +1,125 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Register</title>
+    <meta name="description" content="spring-boot thymeleaf | Register ">
+    <div th:replace="fragments/header :: header-login-css"></div>
+</head>
+<body>
+<br/>
+<hr/>
+<div class="separator"></div>
+<div class="row">
+    <div class="container">
+        <div class="login-register-form-section">
+            <div class="nav nav-tabs" role="tablist">
+                <a th:href="@{/login}" class="btn btn-info ">Login</a>
+                <a href="#register" data-toggle="tab" class="btn btn-info ">Register</a>
+
+            </div>
+           <div class="main-login main-center" style="background-color: #fff;-moz-border-radius: 2px; -webkit-border-radius: 2px;border-radius: 2px; -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);  -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);margin-top: 30px;margin: 0 auto;max-width: 350px;padding: 40px 40px;">
+            
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane fade in active" id="register">
+
+                    <div th:if="${saveUser eq 'success'}" class="alert alert-success alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert"
+                                aria-hidden="true">&times;</button>
+                        <strong>User registered Successfully</strong> Please Login
+                    </div>
+
+                    <div th:if="${saveUser eq 'exist-name'}" class="alert alert-danger alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert"
+                                aria-hidden="true">&times;</button>
+                        <strong>Error!</strong> User name already used !!!
+                    </div>
+                    <div th:if="${saveUser eq 'exist-email'}" class="alert alert-danger alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert"
+                                aria-hidden="true">&times;</button>
+                        <strong>Error!</strong> User email already used !!!
+                    </div>
+                    <div th:if="${saveUser eq 'fail'}" class="alert alert-danger alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert"
+                                aria-hidden="true">&times;</button>
+                        <strong>Error!</strong> Unexpected error !!!
+                    </div>
+
+                    <form id="registerForm" th:object="${reqUser}" th:action="@{/user/register}" method="post"
+                          class="form-horizontal">
+                          <div class="form-group ">
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="fa fa-user"></i></div>
+                                <input th:field="*{name}" type="text" name="Name and Surname"
+                                       class="form-control" placeholder="Name and Surname"
+                                       required="required" value=""/>
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="fa fa-user"></i></div>
+                                <input th:field="*{address}" type="text" name="address"
+                                       class="form-control" placeholder="Address"
+                                       required="required" value=""/>
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="fa fa-user"></i></div>
+                                <input th:field="*{username}" type="text" name="register_username"
+                                       class="form-control" placeholder="Username"
+                                       required="required" value=""/>
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="fa fa-envelope"></i></div>
+                                <input th:field="*{email}" type="email" name="register_email" class="form-control"
+                                       placeholder="Email"
+                                       required="required" value=""/>
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="fa fa-lock"></i></div>
+                                <input th:field="*{password}" type="password" name="register_password"
+                                       class="form-control" id="password"
+                                       placeholder="Password" required="required"/>
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="fa fa-lock"></i></div>
+                                <input th:field="*{password_2}" type="password" name="register_cpassword"
+                                       class="form-control" id="confirm_password"
+                                       placeholder="Confirm Password" required="required"/>
+                            </div>
+                        </div>
+                        <input type="submit" value="Register" class="btn btn-success btn-custom"/>
+                    </form>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/webjars/jquery/3.3.1-1/jquery.min.js"></script>
+<script src="/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
+<script>
+    var password = document.getElementById("password")
+            , confirm_password = document.getElementById("confirm_password");
+
+    function validatePassword() {
+        if (password.value != confirm_password.value) {
+            confirm_password.setCustomValidity("Passwords Don't Match");
+        } else {
+            confirm_password.setCustomValidity('');
+        }
+    }
+    password.onchange = validatePassword;
+    confirm_password.onkeyup = validatePassword;
+</script>
+
+</body>
+</html>

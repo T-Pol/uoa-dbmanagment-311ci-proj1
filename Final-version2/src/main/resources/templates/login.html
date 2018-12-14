@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login</title>
+    <meta name="description" content="spring-boot thymeleaf | Login ">
+    <div th:replace="fragments/header :: header-login-css"></div>
+</head>
+<body>
+<br/>
+<hr/>
+<div class="row">
+    <div class="container">
+        <div class="login-register-form-section">
+            <div class="nav nav-tabs" role="tablist">
+               <a href="#login" class="btn btn-info " data-toggle="tab">Login</a>
+               <a th:href="@{/register}" class="btn btn-info" >Register</a>
+            </div>
+                <div class="main-login main-center" style="background-color: #fff;-moz-border-radius: 2px; -webkit-border-radius: 2px;border-radius: 2px; -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);  -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);margin-top: 30px;margin: 0 auto;max-width: 350px;padding: 40px 40px;">
+            
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane fade in active" id="login">
+
+                    <div th:if="${param.error}" class="alert alert-danger alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert"
+                                aria-hidden="true">&times;
+                        </button>
+                        Invalid username or password.
+                    </div>
+                    
+                    <form th:action="@{/login}" method="post" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="fa fa-user"></i></div>
+                                <input type="text" name="username" class="form-control"
+                                       placeholder="Username" required="required" value=""/>
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="fa fa-key"></i></div>
+                                <input type="password" name="password" class="form-control" placeholder="Password"
+                                       required="required"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="checkbox" id="rememberMe"/>
+                            <label for="rememberMe">Remember Me </label>
+                            <a href="#" class="pull-right">Forgot password?</a>
+                        </div>
+                        <input type="submit" value="Login" class="btn btn-success btn-custom"/>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+<script src="/webjars/jquery/3.3.1-1/jquery.min.js"></script>
+<script src="/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
+
+
+</body>
+</html>

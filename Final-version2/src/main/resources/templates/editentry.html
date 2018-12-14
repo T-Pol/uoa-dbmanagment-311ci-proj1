@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Create Request</title>
+<meta name="description" content="spring-boot thymeleaf | home ">
+<div th:replace="fragments/header :: header-css"></div>
+</head>
+<body>
+
+	<div th:replace="fragments/header :: header"></div>
+
+	<div class="tab-content">
+
+		<div class="tab-pane active" id="addTaskTab">
+			<div class="container">
+				<div class="content-container clearfix">
+					<div class="row">
+						<h1 class="content-title">Edit-View Request</h1>
+						<div th:if="${msg eq 'success'}" class="alert alert-success alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert"
+                                aria-hidden="true">&times;
+                        </button>
+                        <strong>Success </strong> Request updated
+                    </div>
+                    <div th:if="${msg eq 'fail'}" class="alert alert-danger alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert"
+                                aria-hidden="true">&times;
+                        </button>
+                        <strong>Error !!!  </strong> Unexpected error occurred. Please try later.
+                    </div>
+
+						<!--end of messages-->
+						<form th:action="@{/task/update}" th:object="${obj}"
+							method="post">
+							<div class="col-md-12">
+								<div class="form-group">
+									<h4  th:text="'ID: '+${obj.dataid}"></h4>
+									<input type="hidden" th:field="*{dataid}"/>
+								</div>
+								<div class="form-group">
+									<h4 th:text="'Service request number: '+${obj.servreqnum}"></h4>
+									<input type="hidden" th:field="*{servreqnum}"/>
+								</div>
+								<div class="form-group">
+									<h4 th:text="'Created on: '+${obj.creationdate}"></h4>
+									<input type="hidden" th:field="*{creationdate}"/>
+								</div>
+								<div class="form-group">
+									<h4 th:text="'Type of request: '+${obj.typeofrequest}"></h4>
+									<input type="hidden" th:field="*{typeofrequest}"/>
+								</div>
+								<div class="form-group">
+								<h4 th:text="'Current Status: '+${obj.state}"></h4>
+								</div>
+								<div class="form-group">
+									<label>Status</label>
+									<div class="form-group" >
+										<select th:field="*{state}">
+											<option th:value="'Open'" th:text="'Open'"></option>
+											<option th:value="'Open - Dup'" th:text="'Open - Dup'"></option>
+											<option th:value="'Completed'" th:text="'Completed'"></option>
+											<option th:value="'Completed - Dup'" th:text="'Completed - Dup'"></option>
+										</select>
+									</div>
+								</div>
+
+
+								<div class="form-group">
+									<input id="streetaddress" type="text" class="form-control"
+										 placeholder="Street Address"
+										th:field="*{streetaddress}" />
+								</div>
+								<div class="form-group">
+									<input id="zipcode" type="number" class="form-control" min="0"
+										max="99999" placeholder="Zip Code" th:field="*{zipcode}" />
+								</div>
+								<div class="form-group">
+									<input id="xcoor" type="number" class="form-control"
+										placeholder="X coordinate" th:field="*{xcoor}" />
+								</div>
+
+								<div class="form-group">
+									<input id="ycoor" type="number" class="form-control"
+										placeholder="Y coordinate" th:field="*{ycoor}" />
+								</div>
+								<div class="form-group">
+									<input id="ward" type="number" class="form-control"
+										placeholder="ward" th:field="*{ward}" min="0" />
+								</div>
+								<div class="form-group">
+									<input id="policedistrict" type="number" class="form-control"
+										min="0" placeholder="Police District"
+										th:field="*{policedistrict}" />
+								</div>
+								<div class="form-group">
+									<input id="communityarea" type="number" class="form-control"
+										min="0" placeholder="Community Area"
+										th:field="*{communityarea}" />
+								</div>
+								<div class="form-group">
+									<input id="ssa" type="number" class="form-control" min="0"
+										placeholder="SSA" th:field="*{ssa}" />
+								</div>
+								<div class="form-group">
+									<input id="lat" type="number" class="form-control"
+										placeholder="Latitude" th:field="*{lat}" />
+								</div>
+								<div class="form-group">
+									<input id="lon" type="number" class="form-control"
+										placeholder="Longtitude" th:field="*{lon}" />
+								</div>
+								<div class="form-group">
+									<textarea id="location" class="form-control"
+										placeholder="Location Details" th:field="*{locationdetails}"></textarea>
+								</div>
+
+								<div th:if="${#strings.equals(obj.typeofrequest, 'Abandoned Vehicle Complaint')}">
+									<label for="abandonedvehicles">Abandoned Vehicle Information:</label>
+									<div id="abandonedvehicles">
+										<div class="form-group">
+											<input id="licenceplate" type="text" class="form-control"
+												placeholder="Licence Plate" th:field="*{licenseplate}" />
+										</div>
+										<div class="form-group">
+											<input id="vehiclemake" type="text" class="form-control"
+												placeholder="Vehicle Make" th:field="*{vehiclemake}" />
+										</div>
+										<div class="form-group">
+											<input id="vehiclecolor" type="text" class="form-control"
+												placeholder="Vehicle Color" th:field="*{vehiclecolor}" />
+										</div>
+										<div class="form-group">
+											<input id="currentactivityab" type="text"
+												class="form-control" placeholder="Current Activity"
+												th:field="*{currentactivityab}" />
+										</div>
+										<div class="form-group">
+											<input id="mostrecentactivityab" type="text"
+												class="form-control" placeholder="Most recent activity"
+												th:field="*{mostrecentactivityab}" />
+										</div>
+										<div class="form-group">
+											<input id="daysreported" type="number" class="form-control"
+												placeholder="Days reported" th:field="*{daysreportedab}"
+												min="0" />
+										</div>
+									</div>
+									
+								</div>
+								<div
+									th:if="${#strings.equals(obj.typeofrequest, 'Garbage Cart Black Maintenance/Replacement')}">
+									<label>Garbage Cart Black Maintenance/Replacement Information:</label>
+									<div>
+										<div class="form-group">
+											<input id="daysreported" type="number" class="form-control"
+												placeholder="Number of carts" th:field="*{numberofcarts}"
+												min="0" />
+										</div>
+										<div class="form-group">
+											<input id="currentactivityab" type="text"
+												class="form-control" placeholder="Current Activity"
+												th:field="*{currentactivitygb}" />
+										</div>
+										<div class="form-group">
+											<input id="mostrecentactivityab" type="text"
+												class="form-control" placeholder="Most recent activity"
+												th:field="*{mostrecentactiongb}" />
+										</div>
+										
+									</div>
+								</div>
+								
+								<div th:if="${#strings.equals(obj.typeofrequest, 'Pot Hole in Street')}">
+									<label>Pot Hole in Street Information:</label>
+									<div>
+										<div class="form-group">
+											<input  type="number" class="form-control"
+												placeholder="Number of pot holes" th:field="*{numberofpotholes}"
+												min="0" />
+										</div>
+										<div class="form-group">
+											<input type="text"
+												class="form-control" placeholder="Current activity"
+												th:field="*{currentactivitypots}" />
+										</div>
+										<div class="form-group">
+											<input type="text"
+												class="form-control" placeholder="Most recent action"
+												th:field="*{mostrecentactionpots}" />
+										</div>
+										
+									</div>
+								</div>
+								
+								<div th:if="${#strings.equals(obj.typeofrequest, 'Rodent Baiting/Rat Complaint')}">
+									<label>Rodent Baiting/Rat Complaint Information:</label>
+									<div>
+										<div class="form-group">
+											<input type="number" min="0"
+												class="form-control" placeholder="Number of Permises Baited"
+												th:field="*{numberofpermisesbaited}" />
+										</div>
+										<div class="form-group">
+											<input type="number" min="0"
+												class="form-control" placeholder="Number of Permises with Garbage"
+												th:field="*{numberofpermisesgarbage}" />
+										</div>
+										<div class="form-group">
+											<input type="number" min="0"
+												class="form-control" placeholder="Number of Permises with Rats"
+												th:field="*{numberofpermisesrats}" />
+										</div>
+										<div class="form-group">
+											<input type="text"
+												class="form-control" placeholder="Current Activity"
+												th:field="*{currentactivitybait}" />
+										</div>
+										<div class="form-group">
+											<input type="text"
+												class="form-control" placeholder="Most Recent Action"
+												th:field="*{mostrecentactionbait}" />
+										</div>
+									</div>
+								</div>
+								<div th:if="${#strings.equals(obj.typeofrequest, 'Sanitation Code Violation')}">
+									<label>Sanitation Code Violation Information:</label>
+									<div>
+										<div class="form-group">
+											<input type="text"
+												class="form-control" placeholder="Nature of Code Violation"
+												th:field="*{natureofviolation}" />
+										</div>
+										
+									</div>
+								</div>
+								<div th:if="${#strings.equals(obj.typeofrequest, 'Graffiti Removal')}">
+									<label>Graffiti Removal Information:</label>
+									<div>
+									<div class="form-group">
+										<div class="form-group">
+											<input type="text"
+												class="form-control" placeholder="Type of Surface"
+												th:field="*{typeofsurface}" />
+										</div>
+										<div class="form-group">
+											<input type="text"
+												class="form-control" placeholder="Graffiti Location"
+												th:field="*{graffitilocation}" />
+										</div>
+										</div>
+									</div>
+								</div>
+								
+								<div th:if="${#strings.equals(obj.typeofrequest, 'Tree Debris')}">
+									<label>Tree Debris Information:</label>
+									<div>
+									<div class="form-group">
+										<div class="form-group">
+											<input type="text"
+												class="form-control" placeholder="Location of Debris"
+												th:field="*{locationofdebis}" />
+										</div>
+										<div class="form-group">
+											<input type="text"
+												class="form-control" placeholder="Current Activity"
+												th:field="*{currentactivitydebris}" />
+										</div>
+										<div class="form-group">
+											<input type="text"
+												class="form-control" placeholder="Most Recent Action"
+												th:field="*{mostrecentactiondebris}" />
+										</div>
+										</div>
+									</div>
+								</div>
+								<div th:if="${#strings.equals(obj.typeofrequest, 'Tree Trim')}">
+									<label>Tree Trim Information:</label>
+									<div>
+									<div class="form-group">
+										<div class="form-group">
+											<input type="text"
+												class="form-control" placeholder="Location of Trims"
+												th:field="*{locationoftrims}" />
+										</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="float-right btn-send">
+									<button class="btn btn-success btn-md">
+										<span class="glyphicon glyphicon-send"></span> Update
+									</button>
+									
+								</div>
+							</div>
+							<br />
+						</form>
+						
+					</div>
+					<span class="help-block"></span>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>
