@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Create Request</title>
+    <meta name="description" content="spring-boot thymeleaf | home ">
+    <div th:replace="fragments/header :: header-css"></div>
+</head>
+<body>
+
+<div th:replace="fragments/header :: header"></div>
+
+<div class="tab-content">
+
+    <div class="tab-pane active" id="addTaskTab">
+        <div class="container">
+            <div class="content-container clearfix">
+                <div class="row">
+                    <h1 class="content-title">Create Request</h1>
+                    <!--star operations messages-->
+                    <div th:if="${msg eq 'success'}" class="alert alert-success alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert"
+                                aria-hidden="true">&times;
+                        </button>
+                        Request Saved <strong> Successfully</strong>
+                    </div>
+                    <div th:if="${msg eq 'fail'}" class="alert alert-danger alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert"
+                                aria-hidden="true">&times;
+                        </button>
+                        <strong>Unexpected error occurred !!! Please try later.</strong>
+                    </div>
+                    <div th:if="${msg eq 'active'}" class="alert alert-success alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert"
+                                aria-hidden="true">&times;
+                        </button>
+                        <strong><h6 th:text="${msgText}"/></strong>
+                    </div>
+                    <div th:if="${msg eq 'active_fail'}" class="alert alert-danger alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert"
+                                aria-hidden="true">&times;
+                        </button>
+                        <strong>Error !!!</strong> <h6 th:text="${msgText}"/>
+                    </div>
+                    <div th:if="${msg eq 'trash'}" class="alert alert-success alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert"
+                                aria-hidden="true">&times;
+                        </button>
+                        Task Sent to Trash Box
+                    </div>
+                    <!--end of messages-->
+                    <form th:action="@{/task/saveReq}" th:object="${obj}" method="post">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                            
+                            	<select id='dropdown' th:field="*{typeofrequest}">
+								  <option th:value="'Abandoned Vehicle Complaint'" th:text="'Abandoned Vehicle Complaint'"></option>
+								  <option th:value="'Alley Light Out'" th:text="'Alley LightOut'"></option>
+								  <option th:value="'Garbage Cart Black Maintenance/Replacement'"th:text="'Garbage Cart Black Maintenance/Replacement'"></option>
+								  <option th:value="'Graffiti Removal'" th:text="'Graffiti Removal'"></option>
+								  <option th:value="'Pot Hole in Street'" th:text="'Pot Hole in Street'"></option>
+								  <option th:value="'Rodent Baiting/Rat Complaint'" th:text="'Rodent Baiting/Rat Complaint'"></option>
+								  <option th:value="'Sanitation Code Violation'" th:text="'Sanitation Code Violation'"></option>
+								  <option th:value="'Street Lights - All/Out'" th:text="'Street Lights - All/Out'"></option>
+								  <option th:value="'Street Light - 1/Out'" th:text="'Street Light - 1/Out'"></option>
+								  <option th:value="'Tree Debris'" th:text="'Tree Debris'"></option>
+								  <option th:value="'Tree Trim'" th:text="'Tree Trim'"></option>								  
+								</select>
+                            </div>
+                            
+                                                  
+                            <div class="form-group">
+                                <input id="streetaddress"  type="text" class="form-control"
+                                       
+                                       placeholder="Street Address" th:field="*{streetaddress}"/>
+                            </div>
+                            <div class="form-group">
+                                <input id="zipcode"  type="number" class="form-control" min="0"
+                                       
+                                       placeholder="Zip Code"  th:field="*{zipcode}"/>
+                            </div>
+                           
+                        <div class="form-group">
+									<input id="xcoor" type="number" class="form-control"
+										placeholder="X coordinate" step="any" th:field="*{xcoor}" />
+								</div>
+
+								<div class="form-group">
+									<input id="ycoor" type="number" class="form-control"
+										placeholder="Y coordinate" step="any" th:field="*{ycoor}" />
+								</div>
+                            
+                            <div class="form-group">
+                                <input id="ward"  type="number" class="form-control" min="0"
+                                      
+                                       placeholder="ward" th:field="*{ward}"/>
+                            </div>
+                            <div class="form-group">
+                                <input id="policedistrict"  type="number" class="form-control" min="0" 
+                                      
+                                       placeholder="Police District" th:field="*{policedistrict}"/>
+                            </div>
+                            <div class="form-group">
+                                <input id="communityarea"  type="number" class="form-control" min="0"
+                                      
+                                       placeholder="Community Area" th:field="*{communityarea}"/>
+                            </div>
+                            <div class="form-group">
+                                <input id="ssa"  type="number" class="form-control" min="0"
+                                      
+                                       placeholder="SSA" th:field="*{ssa}"/>
+                            </div>
+                            <div class="form-group">
+                                <input id="lat"  type="number" class="form-control"
+                                      
+                                       placeholder="Latitude" th:field="*{lat}"/>
+                            </div>
+                            <div class="form-group">
+                                <input id="lon"  type="number" class="form-control"
+                                      
+                                       placeholder="Longtitude" th:field="*{lon}"/>
+                            </div>
+                            <div class="form-group">
+                            <textarea id="location" class="form-control"  placeholder="Location Details"
+                                       th:field="*{locationdetails}"></textarea>
+                            </div>
+                            
+                            <label for="abandonedvehicles">Abandoned Vehicle Information:</label>
+                            <div id="abandonedvehicles">
+                            <div class="form-group">
+                                <input id="licenceplate"  type="text" class="form-control" placeholder="Licence Plate" th:field="*{licenseplate}"/>
+                            </div>
+                            <div class="form-group">
+                                <input id="vehiclemake"  type="text" class="form-control" placeholder="Vehicle Make" th:field="*{vehiclemake}"/>
+                            </div>
+                            <div class="form-group">
+                                <input id="vehiclecolor"  type="text" class="form-control" placeholder="Vehicle Color" th:field="*{vehiclecolor}"/>
+                            </div>
+                            <div class="form-group">
+                                <input id="currentactivityab"  type="text" class="form-control" placeholder="Current Activity" th:field="*{currentactivityab}"/>
+                            </div>
+                            <div class="form-group">
+                                <input id="mostrecentactivityab"  type="text" class="form-control" placeholder="Most recent activity" th:field="*{mostrecentactivityab}"/>
+                            </div>
+                            <div class="form-group">
+                                <input id="daysreported"  type="number" min="0" class="form-control" placeholder="Days reported" th:field="*{daysreportedab}"/>
+                            </div>
+                            </div>
+                            
+                            <label for="garbagecart">Garbage Cart Black Maintenance/Replacement Information:</label>
+                            <div id="garbagecart">
+                            <div class="form-group">
+                                <input id="numberofcarts"  type="number" min="0"class="form-control" placeholder="Number of Carts" th:field="*{numberofcarts}"/>
+                            </div>
+                            <div class="form-group">
+                                <input id="currentactivitygarb"  type="text" class="form-control" placeholder="Current Activity" th:field="*{currentactivitygb}"/>
+                            </div>
+                            <div class="form-group">
+                                <input id="mostrecentactivitygarb"  type="text" class="form-control" placeholder="Most recent activity" th:field="*{mostrecentactiongb}"/>
+                            </div>
+                            </div>
+                            
+                            <label for="graffiti">Graffiti Removal Information:</label>
+                            <div id="graffiti">
+                            <div class="form-group">
+                                <input id="typeofsurface"  type="text" class="form-control" placeholder="Type of Surface" th:field="*{typeofsurface}"/>
+                            </div>
+                            <div class="form-group">
+                                <input id="graffitilocation"  type="text" class="form-control" placeholder="Graffiti located" th:field="*{graffitilocation}"/>
+                            </div>
+                            </div>
+                            
+                            <label for="potholes">Pot Hole in Street Information:</label>
+                            <div id="potholes">
+                            <div class="form-group">
+                                <input id="numberofpots"  type="number" min="0" class="form-control" placeholder="Number of Pot holes" th:field="*{numberofpotholes}"/>
+                            </div>
+                            <div class="form-group">
+                                <input id="currentactivitypot"  type="text" class="form-control" placeholder="Current Activity" th:field="*{currentactivitypots}"/>
+                            </div>
+                            <div class="form-group">
+                                <input id="mostrecentactivitypot"  type="text" class="form-control" placeholder="Most recent activity" th:field="*{mostrecentactionpots}"/>
+                            </div>
+                            </div>
+                            
+                            <label for="rodentbaiting">Rodent Baiting/Rat Complaint Information:</label>
+                            <div id="rodentbaiting">
+                            <div class="form-group">
+                                <input id="numberofpermisesbaited"  type="number" min="0" class="form-control" placeholder="Number of Permises Baited" th:field="*{numberofpermisesbaited}"/>
+                            </div>
+                            <div class="form-group">
+                                <input id="numberofpermisesgarbage"  type="number"min="0" class="form-control" placeholder="Number of Permises with Garbage" th:field="*{numberofpermisesgarbage}"/>
+                            </div>
+                            <div class="form-group">
+                                <input id="numberofpermisesrats"  type="number" min="0"class="form-control" placeholder="Number of Permises with Rats" th:field="*{numberofpermisesrats}"/>
+                            </div>
+                            <div class="form-group">
+                                <input id="currentactivityrodent"  type="text" class="form-control" placeholder="Current Activity" th:field="*{currentactivitybait}"/>
+                            </div>
+                            <div class="form-group">
+                                <input id="mostrecentactivityrodent"  type="text" class="form-control" placeholder="Most recent activity" th:field="*{mostrecentactionbait}"/>
+                            </div>
+                            </div>
+                            
+                            <label for="sanitationcode">Sanitation Code Violation Information:</label>
+                            <div id="sanitationcode">
+                             <div class="form-group">
+                                <input id="natureofcodeviolation"  type="text" class="form-control" placeholder="Nature of Code Violation" th:field="*{natureofviolation}"/>
+                            </div>                            
+                            </div>
+                            
+                            <label for="treedebris">Tree Debris Information:</label>
+                            <div id="treedebris">
+                            <div class="form-group">
+                                <input id="debrislocation"  type="text" class="form-control" placeholder="Location of Debris" th:field="*{locationofdebis}"/>
+                            </div>   
+                            <div class="form-group">
+                                <input id="currentactivitydebris"  type="text" class="form-control" placeholder="Current Activity" th:field="*{currentactivitydebris}"/>
+                            </div>
+                            <div class="form-group">
+                                <input id="mostrecentactivitydebris"  type="text" class="form-control" placeholder="Most recent activity" th:field="*{mostrecentactiondebris}"/>
+                            </div>                           	
+                            </div>
+                            
+                            <label for="treetrims">Tree Trim Information:</label>
+                            <div id="treetrims">
+                            <div class="form-group">
+                                <input id="trimslocation"  type="text" class="form-control" placeholder="Location of Trims" th:field="*{locationoftrims}"/>
+                            </div> 
+                            </div>
+                           
+                            
+                            
+                            <div class="float-right btn-send">
+                                <button class="btn btn-success btn-md"><span class="glyphicon glyphicon-send"></span>
+                                    Create
+                                </button>
+                            </div>
+                        </div>
+                        <br/>
+                    </form>
+                </div>
+                <span class="help-block"></span>
+             
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/javascript">
+	$('#dropdown').change(function() {
+	    if( $(this).val() == 'Alley Light Out') {
+	        $('#allelightout').prop( "disabled", true );
+	        $('#allelightout').val(null);
+	    } else {       
+	        $('#allelightout').prop( "disabled", false );
+	    }
+	});
+</script>
+
+</body>
+</html>
